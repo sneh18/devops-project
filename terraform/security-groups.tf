@@ -90,7 +90,7 @@ module "bastion-sg" {
   ingress_rules = ["ssh-tcp"]
   ingress_cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
 
-  egress_rules = [
+  egress_with_cidr_blocks = [
     {
       from_port   = 0
       to_port     = 65535
