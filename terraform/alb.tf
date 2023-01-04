@@ -82,7 +82,7 @@ resource "aws_alb_target_group" "jenkins-tg" {
 # Create Application Target Group for Application Instance
 resource "aws_alb_target_group" "app-tg" {  
   name     = "app-tg"  
-  port     = "8080"
+  port     = "8081"
   protocol = "HTTP"  
   vpc_id   = module.vpc.vpc_id  
   tags = {
@@ -90,7 +90,7 @@ resource "aws_alb_target_group" "app-tg" {
   }
   health_check {
     path = "/app"
-    port = 8080
+    port = 8081
     healthy_threshold = 6
     unhealthy_threshold = 2
     timeout = 2
@@ -112,5 +112,5 @@ resource "aws_lb_target_group_attachment" "app" {
   depends_on   = [aws_alb_target_group.app-tg]  
   target_group_arn = "${aws_alb_target_group.app-tg.arn}"
   target_id        = module.app-instance.id
-  port             = "8080"
+  port             = "8081"
 }
